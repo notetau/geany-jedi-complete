@@ -1,0 +1,45 @@
+ifeq ($(PREFIX),)
+INSTALL_DIR = `pkg-config --variable=libdir geany`/geany
+else
+INSTALL_DIR = $(PREFIX)
+endif
+
+DIRNAME ?= geany-complete-core
+
+CORE_SRCS += cc_plugin.cpp suggestion_window.cpp completion_async.cpp completion_framework_base.cpp
+SRCS += $(addprefix ${DIRNAME}/src/, $(CORE_SRCS))
+SRCS += $(LANG_SRCS)
+
+OBJS := $(addprefix lib/, $(SRCS:.cpp=.o))
+
+CXXFLAGS += -fPIC `pkg-config --cflags geany` -std=c++11 -I./${DIRNAME}/include
+LDFLAGS  += -shared `pkg-config --libs geany`
+
+
+all: lib/$(PLUGIN_NAME)
+
+print_vars:
+	@echo "--" $(PLUGIN_NAME) "--"
+	@echo "SRCS"
+	@echo $(SRCS)
+	@echo "OBJS"
+	@echo $(OBJS)
+	@echo "CXXFLAGS"
+	@echo $(CXXFLAGS)
+	@echo "LDFLAGS"
+	@echo $(LDFLAGS)
+
+
+lib/$(PLUGIN_NAME): $(OBJS)
+	$(CXX) $(OBJS) $(LDFLAGS) -o $@
+
+lib/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -c $< $(CXXFLAGS) -o $@
+
+install: lib/$(PLUGIN_NAME)
+	cp lib/$(PLUGIN_NAME) $(INSTALL_DIR)/$(PLUGIN_NAME)
+
+clean:
+	cd lib; find -name *.o -print | xargs rm -f
+	rm -f lib/$(PLUGIN_NAME)
