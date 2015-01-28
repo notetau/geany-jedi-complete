@@ -41,7 +41,7 @@ class SuggestionWindow
 	// void show_with_filter(const cc::CodeCompletionResults& results, const std::string& filter);
 	void close();
 
-	bool isShowing() const { return showing_flag; }
+	bool is_showing() const { return showing_flag; }
 	void arrange_window();
 
 	int set_max_char_in_row(int num) { max_char_in_row = num; }
