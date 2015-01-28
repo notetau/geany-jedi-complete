@@ -105,7 +105,7 @@ void SuggestionWindow::signal_tree_selection(GtkTreeView* tree_view, GtkTreePath
 gboolean SuggestionWindow::signal_key_press_and_release(GtkWidget* widget, GdkEventKey* event,
                                                         SuggestionWindow* self)
 {
-	if (!self->isShowing()) {
+	if (!self->is_showing()) {
 		return FALSE;
 	}
 
@@ -142,7 +142,7 @@ gboolean SuggestionWindow::signal_key_press_and_release(GtkWidget* widget, GdkEv
 
 void SuggestionWindow::do_filtering()
 {
-	if (!this->isShowing()) {
+	if (!this->is_showing()) {
 		return;
 	}
 
@@ -177,7 +177,7 @@ void SuggestionWindow::do_filtering()
 
 void SuggestionWindow::filter_backspace()
 {
-	if (this->isShowing()) {
+	if (this->is_showing()) {
 		if (filtered_str.empty()) {
 			this->close();
 		} else {
@@ -189,7 +189,7 @@ void SuggestionWindow::filter_backspace()
 
 void SuggestionWindow::filter_add(int ch)
 {
-	if (this->isShowing()) {
+	if (this->is_showing()) {
 		char buf[8] = {0};
 		g_unichar_to_utf8((gunichar)ch, buf);
 		filtered_str += buf;
@@ -199,7 +199,7 @@ void SuggestionWindow::filter_add(int ch)
 
 void SuggestionWindow::filter_add(const std::string& str)
 {
-	if (this->isShowing()) {
+	if (this->is_showing()) {
 		filtered_str += str;
 		do_filtering();
 	}
@@ -382,7 +382,7 @@ void SuggestionWindow::setup_showing(const CodeCompletionResults& results)
 void SuggestionWindow::show(const CodeCompletionResults& results, const char* initial_filter)
 {
 	if (!results.empty()) {
-		if (this->isShowing()) {  // close and show
+		if (this->is_showing()) {  // close and show
 			this->close();
 		}
 		setup_showing(results);
