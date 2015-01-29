@@ -156,7 +156,7 @@ void PythonCompletionFramework::load_preferences()
 
     std::string config_file = get_config_file();
 
-    /* Initialising options from config file */
+    // Initialising options from config file
     GKeyFile* keyfile = g_key_file_new();
     if (g_key_file_load_from_file(keyfile, config_file.c_str(), G_KEY_FILE_NONE, NULL)) {
 	const char* group = get_plugin_name();
@@ -173,8 +173,6 @@ void PythonCompletionFramework::load_preferences()
 	temp = g_key_file_get_string(keyfile, group, "python_path", NULL);
 	pref->python_path = temp;
 	g_free(temp);
-
-	// group, type, key, default-value
     } else {
 	pref->row_text_max = 120;
 	pref->suggestion_window_height_max = 300;
