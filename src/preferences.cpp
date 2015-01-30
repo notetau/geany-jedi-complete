@@ -96,6 +96,27 @@ static void on_configure_response(GtkDialog* dialog, gint response, gpointer use
     }
 }
 
+static void on_click_file_choose_button(GtkButton* button, gpointer user_data)
+{
+    GtkWidget* dialog = gtk_file_chooser_dialog_new("Select Python binary",
+                                                    NULL,
+						    GTK_FILE_CHOOSER_ACTION_OPEN,
+						    _("_Cancel"),
+						    GTK_RESPONSE_CANCEL,
+						    _("_Open"),
+						    GTK_RESPONSE_ACCEPT,
+						    NULL);
+    GtkFileChooser* chooser = GTK_FILE_CHOOSER(dialog);
+    gint res = gtk_dialog_run(GTK_DIALOG(dialog));
+    if (res == GTK_RESPONSE_ACCEPT)
+    {
+	char* filename = gtk_file_chooser_get_filename(chooser);
+	gtk_entry_buffer_set_text(pref_widgets.pypath_buffer, filename, -1);
+	g_free(filename);
+    }
+    gtk_widget_destroy(dialog);
+}
+
 static void on_click_exec_button(GtkButton* button, gpointer user_data)
 {
 }
@@ -137,6 +158,9 @@ GtkWidget* PythonCompletionFramework::create_config_widget(GtkDialog* dialog)
     GtkWidget* pypath_entry = GETOBJ("te_pypath");
     pref_widgets.pypath_buffer = gtk_entry_get_buffer(GTK_ENTRY(pypath_entry));
     gtk_entry_set_text(GTK_ENTRY(pypath_entry), pref->python_path.c_str());
+
+    GtkWidget* file_choose_button = GETOBJ("btn_filesel");
+    g_signal_connect(file_choose_button, "clicked", G_CALLBACK(on_click_file_choose_button), NULL);
 
     pref_widgets.port_spinbtn = GETOBJ("spin_port");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(pref_widgets.port_spinbtn),
