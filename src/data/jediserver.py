@@ -77,8 +77,7 @@ class Handler(httpserver.BaseHTTPRequestHandler):
             elif c.type == "keyword":
                 pass  # ignore keyword
             else:
-                print("error type:{0} name:{1}".format(c.type, c.name))
-                raise RuntimeError()
+                print("unknown type:{0} name:{1}".format(c.type, c.name))
         return result
 
 
