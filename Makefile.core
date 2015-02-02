@@ -12,7 +12,7 @@ SRCS += $(LANG_SRCS)
 
 OBJS := $(addprefix lib/, $(SRCS:.cpp=.o))
 
-CXXFLAGS += -fPIC `pkg-config --cflags geany` -std=c++11 -I./${DIRNAME}/include
+CXXFLAGS += -fPIC `pkg-config --cflags geany` -std=c++0x -I./${DIRNAME}/include
 LDFLAGS  += -shared `pkg-config --libs geany`
 
 
