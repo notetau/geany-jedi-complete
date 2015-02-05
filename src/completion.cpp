@@ -73,6 +73,10 @@ public:
 	void set_option(std::vector<std::string>& options)
 	{
 		clean_jedi_server();
+		// we expect options ...
+		// options[0] = python path
+		// options[1] = directory puts serverscript (jediserver.py)
+		// options[2] = server port
 		if (options.size() != 3) {
 			std::cerr<<"geany-jedi-complete: invalid options"<<std::endl;
 			return;
@@ -122,6 +126,7 @@ public:
 		return true;
 	}
 	static void spawn_pre_action(gpointer) {}
+
 	static void watch_child(GPid pid, gint status, gpointer self_)
 	{
 		printf("closing child\n");
@@ -180,7 +185,7 @@ public:
 		printf("complete:%s\n", buf);
 		post_data += buf;
 		post_data += content;
-		// setup http request to complete
+		// setup http request to complete using cURL
 		CURL* curl = curl_easy_init();
 		if (!curl) {
 			printf("couldn't init curl\n");
@@ -222,7 +227,7 @@ public:
 			std::istringstream stream2(temp);
 			std::string arg[3];
 			int arg_count = 0;
-			// receive "type$typed_text$arguement"
+			// receive $-separated values such as "type$typed_text$arguement"
 			for(int i=0; i<3; i++) { std::getline(stream2, arg[i], '$'); };
 			if(!arg[1].empty()) {
 				CompleteResultRow row;
