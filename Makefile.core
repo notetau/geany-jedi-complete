@@ -6,7 +6,9 @@ endif
 
 DIRNAME ?= geany-complete-core
 
-CORE_SRCS += cc_plugin.cpp suggestion_window.cpp completion_async.cpp completion_framework_base.cpp
+CORE_SRCS += cc_plugin.cpp suggestion_window.cpp \
+completion_async.cpp completion_framework_base.cpp utils.cpp
+
 SRCS += $(addprefix ${DIRNAME}/src/, $(CORE_SRCS))
 SRCS += $(LANG_SRCS)
 
