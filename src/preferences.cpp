@@ -20,6 +20,8 @@
  */
 
 #include <geanycc/geanycc.hpp>
+#include <geanycc/utils.hpp>
+#include <geanyplugin.h>
 
 #include <vector>
 #include <string>
@@ -28,36 +30,6 @@
 #include "completion_framework.hpp"
 
 #include "preferences.hpp"
-
-
-static void save_keyfile(GKeyFile* keyfile, const char* path)
-{
-    // TODO use smart_ptr if errors occur, happen memory leak
-    gchar* dirname = g_path_get_dirname(path);
-
-    gsize data_length;
-    gchar* data = g_key_file_to_data(keyfile, &data_length, NULL);
-
-    int err = utils_mkdir(dirname, TRUE);
-    if (err != 0) {
-	g_critical(_("Failed to create configuration directory \"%s\": %s"), dirname,
-		   g_strerror(err));
-	return;
-    }
-
-    GError* error = NULL;
-    if (!g_file_set_contents(path, data, data_length, &error)) {
-	g_critical(_("Failed to save configuration file: %s"), error->message);
-	g_error_free(error);
-	return;
-    }
-    g_free(data);
-    g_free(dirname);
-}
-
-// config dialog implements
-
-#include <geanyplugin.h>
 
 static struct PrefWidget
 {
@@ -229,7 +201,7 @@ void PythonCompletionFramework::save_preferences()
     g_key_file_set_integer(keyfile, group, "server_port", pref->jedi_server_port);
     g_key_file_set_string(keyfile, group, "python_path", pref->python_path.c_str());
 
-    save_keyfile(keyfile, config_file.c_str());
+    geanycc::util::save_keyfile(keyfile, config_file.c_str());
 
     g_key_file_free(keyfile);
 }
