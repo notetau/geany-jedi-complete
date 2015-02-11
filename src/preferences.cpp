@@ -70,7 +70,7 @@ static void on_configure_response(GtkDialog* dialog, gint response, gpointer use
 
 static void on_click_file_choose_button(GtkButton* button, gpointer user_data)
 {
-    GtkWidget* dialog = gtk_file_chooser_dialog_new("Select Python binary",
+    GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Select Python binary"),
                                                     NULL,
 						    GTK_FILE_CHOOSER_ACTION_OPEN,
 						    _("_Cancel"),
