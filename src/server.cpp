@@ -21,14 +21,37 @@
 
 #include "server.hpp"
 
+#include <gtk/gtk.h>
+#include <geanycc/geanycc.hpp>
+
 namespace geanycc
 {
 	namespace python
 	{
-		// TODO
 		bool check_and_install_jediserver_script(const char* path)
 		{
-			return false;
+			if (!g_file_test(path, G_FILE_TEST_EXISTS)) {
+				printf("not found jediserver.py... try to install\n");
+				// now, jediserver.py doesn't exist, creating it
+				// check directory exist
+				gchar* dirname = g_path_get_dirname(path);
+				gint mkdir_ret = g_mkdir_with_parents(dirname, 0700);
+				g_free(dirname);
+				if (mkdir_ret == -1) {
+					g_critical("Failed to create directory \"%s\"", dirname);
+					return false;
+				}
+				// make jediserver.py
+				// define jediserver_py, jediserver_py_len
+				#include "data/jediserver_py.hpp"
+				GError* error = NULL;
+				if (!g_file_set_contents(path, (gchar*)jediserver_py, jediserver_py_len, &error)) {
+					g_critical("Failed to save jediserver.py: %s", error->message);
+					g_error_free(error);
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 }
