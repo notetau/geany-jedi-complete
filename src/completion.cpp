@@ -36,6 +36,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include "server.hpp"
+
 namespace geanycc
 {
 
@@ -85,7 +87,7 @@ public:
 		const char* python_path = options[0].c_str();
 		std::string dir = options[1];
 		std::string script_path = dir + "/jediserver.py";
-		if (!check_and_set_jediserver_script(script_path.c_str())) {
+		if (!geanycc::python::check_and_install_jediserver_script(script_path.c_str())) {
 			return; // happen critical error
 		}
 		port_str = options[2];
@@ -98,33 +100,6 @@ public:
 		std::cout<<"start jedi server pid:"<< serve_pid <<std::endl;
 	}
 
-	bool check_and_set_jediserver_script(const char* script_path)
-	{
-		printf("test jediserver exists\n");
-		if (!g_file_test(script_path, G_FILE_TEST_EXISTS)) {
-			printf("not found jediserver.py\n");
-			// now, jediserver.py doesn't exist, creating it
-			// check directory exist
-			gchar* dirname = g_path_get_dirname(script_path);
-			gint mkdir_ret = g_mkdir_with_parents(dirname, 0700);
-			g_free(dirname);
-			if (mkdir_ret == -1) {
-				g_critical("Failed to create directory \"%s\"", dirname);
-				return false;
-			}
-			// make jediserver.py
-			// define jediserver_py, jediserver_py_len
-			#include "data/jediserver_py.hpp"
-			GError* error = NULL;
-			if (!g_file_set_contents(script_path,
-			                         (gchar*)jediserver_py, jediserver_py_len, &error)) {
-				g_critical("Failed to save jediserver.py: %s", error->message);
-				g_error_free(error);
-				return false;
-			}
-		}
-		return true;
-	}
 	static void spawn_pre_action(gpointer) {}
 
 	static void watch_child(GPid pid, gint status, gpointer self_)
