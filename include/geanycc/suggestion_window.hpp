@@ -27,6 +27,7 @@
 
 namespace geanycc
 {
+
 class SuggestionWindow
 {
    public:
@@ -77,4 +78,4 @@ class SuggestionWindow
 
 	void setup_showing(const CodeCompletionResults& results);
 };
-}
+} // namespace geanycc
