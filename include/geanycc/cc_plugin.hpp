@@ -28,7 +28,8 @@ extern GeanyData *geany_data;
 extern GeanyFunctions *geany_functions;
 }
 
-namespace geanycc {
+namespace geanycc
+{
 	class CompletionFrameworkBase;
 
 	/// we need to define this function and return "completion-framwwork" pointer each languages.
