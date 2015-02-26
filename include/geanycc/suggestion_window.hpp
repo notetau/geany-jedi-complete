@@ -27,6 +27,7 @@
 
 namespace geanycc
 {
+
 class SuggestionWindow
 {
    public:
@@ -59,8 +60,8 @@ class SuggestionWindow
 	std::string filtered_str;
 	int pos_start;
 
-	int max_char_in_row = 100;
-	int max_window_height = 300;
+	int max_char_in_row = 100;  /// maximum suggestion text (letters)
+	int max_window_height = 300; /// suggestion window height (px)
 
 	int character_width;  // for calc treeview width
 
@@ -77,4 +78,4 @@ class SuggestionWindow
 
 	void setup_showing(const CodeCompletionResults& results);
 };
-}
+} // namespace geanycc

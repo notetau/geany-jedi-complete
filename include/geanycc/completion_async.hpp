@@ -25,9 +25,13 @@
 
 namespace geanycc
 {
+/**
+    It provides asynchronous completion.
+*/
 class CodeCompletionAsyncWrapper
 {
    public:
+	/// @attention delete @param completion pointer on destructor
 	CodeCompletionAsyncWrapper(CodeCompletionBase* completion);
 	~CodeCompletionAsyncWrapper();
 	void set_option(std::vector<std::string>& options);

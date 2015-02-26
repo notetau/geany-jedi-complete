@@ -30,6 +30,8 @@ extern GeanyFunctions *geany_functions;
 
 namespace geanycc {
 	class CompletionFrameworkBase;
+
+	/// we need to define this function and return "completion-framwwork" pointer each languages.
 	CompletionFrameworkBase* create_lang_completion_framework();
 }
 
