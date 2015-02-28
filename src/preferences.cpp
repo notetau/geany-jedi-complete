@@ -31,6 +31,8 @@
 
 #include "preferences.hpp"
 
+#include "server.hpp"
+
 static struct PrefWidget
 {
     GtkWidget* row_text_max_spinbtn;
@@ -91,6 +93,9 @@ static void on_click_file_choose_button(GtkButton* button, gpointer user_data)
 
 static void on_click_exec_button(GtkButton* button, gpointer user_data)
 {
+    JediCompletePluginPref* pref = JediCompletePluginPref::instance();
+    std::string server_script = pref->server_script_dir + "/jediserver.py";
+    geanycc::python::check_and_install_jediserver_script(server_script.c_str());
 }
 
 #define GETOBJ(name) GTK_WIDGET(gtk_builder_get_object(builder, name))
