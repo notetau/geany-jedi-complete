@@ -25,7 +25,9 @@
 
 namespace geanycc
 {
-enum CompleteResultType {
+
+enum CompleteResultType
+{
 	COMPLETE_RESULT_VAR,
 	COMPLETE_RESULT_FUNCTION,
 	COMPLETE_RESULT_CLASS,
@@ -38,7 +40,8 @@ enum CompleteResultType {
 	COMPLETE_RESULT_NONE,
 };
 
-enum CompleteResultAvailability {
+enum CompleteResultAvailability
+{
 	COMPLETE_RESULT_AVAIL_AVAIL,
 	COMPLETE_RESULT_AVAIL_DEPRECATED,
 	COMPLETE_RESULT_AVAIL_NOTAVAIL,
@@ -73,4 +76,5 @@ class CodeCompletionBase
 	virtual void complete(CodeCompletionResults& result, const char* filename, const char* content,
 	                      int line, int col, int flag = 0) = 0;
 };
-}
+
+} // namespace geanycc

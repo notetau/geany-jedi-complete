@@ -31,37 +31,44 @@
 namespace geanycc
 {
 
+/**
+ *  each language must derive it.
+ */
 class CompletionFrameworkBase
 {
-   protected:
-	CodeCompletionAsyncWrapper* completion = nullptr;
-	SuggestionWindow* suggestion_window = nullptr;
-
    public:
 	CompletionFrameworkBase() {}
 	virtual ~CompletionFrameworkBase() {}
 
+	/// return plugin specific name
 	virtual const char* get_plugin_name() const = 0;
 
+	/// what filetypes does this plugin activate on?
 	virtual bool check_filetype(GeanyFiletype* ft) const = 0;
-	/**
-	    return true if typed . -> :: except for comments and strings, otherwise false.
-	 */
+
+	/// return true if typed . -> :: except for comments and strings, otherwise false.
 	virtual bool check_trigger_char(GeanyEditor* editor) = 0;
 
+	/// plugin setting widget
 	virtual GtkWidget* create_config_widget(GtkDialog* dialog) = 0;
 
 	virtual void load_preferences() = 0;
 	virtual void updated_preferences() = 0;
 	virtual void save_preferences() = 0;
 
+	/// async completion class wrapper
 	void set_completion_option(std::vector<std::string>& options);
 	void complete_async(const char* filename, const char* content, int line, int col, int flag = 0);
 	bool try_get_completion_results(CodeCompletionResults& result);
 
 	void set_suggestion_window(SuggestionWindow* window) { suggestion_window = window; }
 
+	/// return path to configure file
 	std::string get_config_file();
+   protected:
+	CodeCompletionAsyncWrapper* completion = nullptr;
+	SuggestionWindow* suggestion_window = nullptr;
+
 };
 
 }
