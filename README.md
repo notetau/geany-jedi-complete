@@ -14,4 +14,5 @@ or
 - cURL
 
 ## screenshot
-see [wiki](https://github.com/notetau/geany-clang-complete/wiki)
+![screenshot](https://github.com/notetau/geany-complete-core/wiki/image/geany-cc_sc2.png)
+
