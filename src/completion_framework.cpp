@@ -58,6 +58,7 @@ bool PythonCompletionFramework::check_trigger_char(GeanyEditor* editor)
 	char c1 = sci_get_char_at(editor->sci, pos - 1);
 	JediCompletePluginPref* pref = JediCompletePluginPref::instance();
 
+	// disable completion on comments or string literals
 	int style_id = sci_get_style_at(editor->sci, pos);
 	switch (style_id) {
 		case SCE_P_COMMENTLINE: case SCE_P_COMMENTBLOCK:
