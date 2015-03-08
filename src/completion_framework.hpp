@@ -37,9 +37,8 @@ class PythonCompletionFramework : public CompletionFrameworkBase
 	const char* get_plugin_name() const { return _("jedi-complete"); }
 
 	bool check_filetype(GeanyFiletype* ft) const;
-	/**
-	    return true if typed . -> :: except for comments and strings, otherwise false.
-	 */
+
+	/// return true if typed . except for comments and strings, otherwise false.
 	bool check_trigger_char(GeanyEditor* editor);
 
 	GtkWidget* create_config_widget(GtkDialog* dialog);
