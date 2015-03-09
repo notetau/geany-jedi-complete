@@ -1,5 +1,4 @@
 # geany-complete-core
-====================
 
 a core code of [Geany](https://github.com/geany/geany) completion plugins
 
