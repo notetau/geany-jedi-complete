@@ -28,6 +28,7 @@ struct JediCompletePluginPref
 	bool start_completion_with_dot;
 	int row_text_max;
 	int suggestion_window_height_max;
+	int page_up_down_skip_amount;
 	std::string python_path;
 	int jedi_server_port;
 	std::string server_script_dir; // hidden preference
