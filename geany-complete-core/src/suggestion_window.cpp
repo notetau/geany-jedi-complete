@@ -119,6 +119,18 @@ gboolean SuggestionWindow::signal_key_press_and_release(GtkWidget* widget, GdkEv
 		case GDK_KEY_KP_Up:
 			self->move_cursor(false);
 			return TRUE;
+		case GDK_KEY_Page_Down:
+		case GDK_KEY_KP_Page_Down:
+			for (int i = 0; i < self->page_up_down_skip_amount; i++) {
+				self->move_cursor(true);
+			}
+			return TRUE;
+		case GDK_KEY_Page_Up:
+		case GDK_KEY_KP_Page_Up:
+			for (int i = 0; i < self->page_up_down_skip_amount; i++) {
+				self->move_cursor(false);
+			}
+			return TRUE;
 		/* select current suggestion */
 		case GDK_KEY_Return:
 		case GDK_KEY_KP_Enter:
@@ -489,7 +501,6 @@ SuggestionWindow::SuggestionWindow() : showing_flag(false)
 	sig_handler_id[2] =
 	    g_signal_connect(G_OBJECT(tree_view), "scroll-event",
 	                     G_CALLBACK(signal_mouse_scroll), this);
-
 	gtk_widget_realize(tree_view);
 }
 

@@ -37,6 +37,7 @@ static struct PrefWidget
 {
     GtkWidget* row_text_max_spinbtn;
     GtkWidget* swin_height_max_spinbtn;
+    GtkWidget* page_up_down_skip_amount_spinbtn;
 
     GtkWidget* start_with_dot;
     GtkEntryBuffer* pypath_buffer;
@@ -56,6 +57,9 @@ static void on_configure_response(GtkDialog* dialog, gint response, gpointer use
 
 	pref->suggestion_window_height_max =
 	    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pref_widgets.swin_height_max_spinbtn));
+
+	pref->page_up_down_skip_amount =
+	    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pref_widgets.page_up_down_skip_amount_spinbtn));
 	// python
 	pref->start_completion_with_dot =
 	    gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pref_widgets.start_with_dot));
@@ -127,6 +131,10 @@ GtkWidget* PythonCompletionFramework::create_config_widget(GtkDialog* dialog)
     pref_widgets.swin_height_max_spinbtn = GETOBJ("spin_sugwinheight");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(pref_widgets.swin_height_max_spinbtn),
 			      pref->suggestion_window_height_max);
+
+	pref_widgets.page_up_down_skip_amount_spinbtn = GETOBJ("spin_pageupdownskipamount");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(pref_widgets.page_up_down_skip_amount_spinbtn),
+			      pref->page_up_down_skip_amount);
     // python
     pref_widgets.start_with_dot = GETOBJ("cbtn_dot");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pref_widgets.start_with_dot),
@@ -166,6 +174,8 @@ void PythonCompletionFramework::load_preferences()
 	    g_key_file_get_integer(keyfile, group, "maximum_char_in_row", NULL);
 	pref->suggestion_window_height_max =
 	    g_key_file_get_integer(keyfile, group, "maximum_sug_window_height", NULL);
+	pref->page_up_down_skip_amount =
+	    g_key_file_get_integer(keyfile, group, "page_up_down_skip_amount", NULL);
 	pref->start_completion_with_dot =
 	    g_key_file_get_boolean(keyfile, group, "start_completion_with_dot", NULL);
 	pref->jedi_server_port =
@@ -177,6 +187,7 @@ void PythonCompletionFramework::load_preferences()
     } else {
 	pref->row_text_max = 120;
 	pref->suggestion_window_height_max = 300;
+	pref->page_up_down_skip_amount = 4;
 	pref->start_completion_with_dot = true;
 	pref->jedi_server_port = 8080;
 	pref->python_path = "/usr/bin/python";
@@ -201,6 +212,8 @@ void PythonCompletionFramework::save_preferences()
     g_key_file_set_integer(keyfile, group, "maximum_char_in_row", pref->row_text_max);
     g_key_file_set_integer(keyfile, group, "maximum_sug_window_height",
 			   pref->suggestion_window_height_max);
+    g_key_file_set_integer(keyfile, group, "page_up_down_skip_amount",
+			   pref->page_up_down_skip_amount);
     g_key_file_set_boolean(keyfile, group, "start_completion_with_dot",
 			   pref->start_completion_with_dot);
     g_key_file_set_integer(keyfile, group, "server_port", pref->jedi_server_port);
@@ -226,6 +239,7 @@ void PythonCompletionFramework::updated_preferences()
     if (this->suggestion_window) {
 	    this->suggestion_window->set_max_char_in_row(pref->row_text_max);
 	    this->suggestion_window->set_max_window_height(pref->suggestion_window_height_max);
+	    this->suggestion_window->set_page_up_down_skip_amount(pref->page_up_down_skip_amount);
     }
 }
 }
