@@ -65,9 +65,11 @@ class SuggestionWindow
 
 	int character_width;  // for calc treeview width
 
-	int sig_handler_id[2];  // for need disconnect event
+	int sig_handler_id[3];  // for need disconnect event
 
 	static gboolean signal_key_press_and_release(GtkWidget* widget, GdkEventKey* event,
+	                                             SuggestionWindow* self);
+	static gboolean signal_mouse_scroll(GtkWidget* widget, GdkEventScroll* event,
 	                                             SuggestionWindow* self);
 	static void signal_tree_selection(GtkTreeView* tree_view, GtkTreePath* path,
 	                                  GtkTreeViewColumn* column, SuggestionWindow* self);
