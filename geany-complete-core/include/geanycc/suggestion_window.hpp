@@ -47,6 +47,7 @@ class SuggestionWindow
 
 	int set_max_char_in_row(int num) { max_char_in_row = num; }
 	int set_max_window_height(int px) { max_window_height = px; }
+	int set_page_up_down_skip_amount(int amount) { page_up_down_skip_amount = amount; }
 
    private:
 	GtkWidget* window;
@@ -62,12 +63,15 @@ class SuggestionWindow
 
 	int max_char_in_row = 100;  /// maximum suggestion text (letters)
 	int max_window_height = 300; /// suggestion window height (px)
+	int page_up_down_skip_amount = 4; /// skip amount when navigating with pageup/down
 
 	int character_width;  // for calc treeview width
 
-	int sig_handler_id[2];  // for need disconnect event
+	int sig_handler_id[3];  // for need disconnect event
 
 	static gboolean signal_key_press_and_release(GtkWidget* widget, GdkEventKey* event,
+	                                             SuggestionWindow* self);
+	static gboolean signal_mouse_scroll(GtkWidget* widget, GdkEventScroll* event,
 	                                             SuggestionWindow* self);
 	static void signal_tree_selection(GtkTreeView* tree_view, GtkTreePath* path,
 	                                  GtkTreeViewColumn* column, SuggestionWindow* self);

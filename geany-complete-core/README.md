@@ -1,6 +1,5 @@
 
 # geany-complete-core
-====================
 
 a core code of [Geany](https://github.com/geany/geany) completion plugins
 
@@ -12,5 +11,5 @@ a core code of [Geany](https://github.com/geany/geany) completion plugins
 ## more
 see [wiki](https://github.com/notetau/geany-complete-core/wiki)
 
-## see
+## reference
 [Geany](https://github.com/geany/geany)
