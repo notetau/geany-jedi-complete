@@ -119,6 +119,18 @@ gboolean SuggestionWindow::signal_key_press_and_release(GtkWidget* widget, GdkEv
 		case GDK_KEY_KP_Up:
 			self->move_cursor(false);
 			return TRUE;
+		case GDK_KEY_Page_Down:
+		case GDK_KEY_KP_Page_Down:
+			for (int i = 0; i < self->page_up_down_skip_amount; i++) {
+				self->move_cursor(true);
+			}
+			return TRUE;
+		case GDK_KEY_Page_Up:
+		case GDK_KEY_KP_Page_Up:
+			for (int i = 0; i < self->page_up_down_skip_amount; i++) {
+				self->move_cursor(false);
+			}
+			return TRUE;
 		/* select current suggestion */
 		case GDK_KEY_Return:
 		case GDK_KEY_KP_Enter:
@@ -135,6 +147,25 @@ gboolean SuggestionWindow::signal_key_press_and_release(GtkWidget* widget, GdkEv
 		case GDK_KEY_KP_Left:
 			self->close();
 			return FALSE;
+		default:
+			return FALSE;
+	}
+}
+
+gboolean SuggestionWindow::signal_mouse_scroll(GtkWidget* widget, GdkEventScroll* event,
+                                                        SuggestionWindow* self)
+{
+	if (!self->is_showing()) {
+		return FALSE;
+	}
+
+	switch (event->direction) {
+		case GDK_SCROLL_DOWN:
+			self->move_cursor(true);
+			return TRUE;
+		case GDK_SCROLL_UP:
+			self->move_cursor(false);
+			return TRUE;
 		default:
 			return FALSE;
 	}
@@ -457,6 +488,9 @@ SuggestionWindow::SuggestionWindow() : showing_flag(false)
 
 	gtk_container_add(GTK_CONTAINER(window), tree_view);
 
+	// enable mouse scroll events on treeview widget
+	gtk_widget_add_events(tree_view, GDK_SCROLL_MASK);
+
 	g_signal_connect(G_OBJECT(tree_view), "row-activated", G_CALLBACK(signal_tree_selection), this);
 	sig_handler_id[0] =
 	    g_signal_connect(G_OBJECT(geany_data->main_widgets->window), "key-press-event",
@@ -464,7 +498,9 @@ SuggestionWindow::SuggestionWindow() : showing_flag(false)
 	sig_handler_id[1] =
 	    g_signal_connect(G_OBJECT(geany_data->main_widgets->window), "focus-out-event",
 	                     G_CALLBACK(detail::close_request), this);
-
+	sig_handler_id[2] =
+	    g_signal_connect(G_OBJECT(tree_view), "scroll-event",
+	                     G_CALLBACK(signal_mouse_scroll), this);
 	gtk_widget_realize(tree_view);
 }
 
