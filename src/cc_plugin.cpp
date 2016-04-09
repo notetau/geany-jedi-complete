@@ -259,7 +259,6 @@ GtkWidget* plugin_configure(GtkDialog* dialog)
 
 GeanyPlugin* geany_plugin;
 GeanyData* geany_data;
-GeanyFunctions* geany_functions;
 
 PluginCallback plugin_callbacks[] = {
     {"editor_notify", (GCallback) & on_editor_notify, FALSE, NULL},
