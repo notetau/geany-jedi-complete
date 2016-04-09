@@ -450,15 +450,20 @@ SuggestionWindow::SuggestionWindow() : showing_flag(false)
 
 	/* create icon pixbuf
 	   follow cc::CompleteResultType order */
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_var_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_method_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_class_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_method_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_var_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_struct_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_namespace_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_macro_icon_pixbuf, FALSE, NULL));
-	icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, sw_other_icon_pixbuf, FALSE, NULL));
+	const guint8* pixbufs[9] = {
+		sw_var_icon_pixbuf,
+		sw_method_icon_pixbuf,
+		sw_class_icon_pixbuf,
+		sw_method_icon_pixbuf,
+		sw_var_icon_pixbuf,
+		sw_struct_icon_pixbuf,
+		sw_namespace_icon_pixbuf,
+		sw_macro_icon_pixbuf,
+		sw_other_icon_pixbuf,
+	};
+	for (int i = 0; i < sizeof(pixbufs) / sizeof(guint8*); i++) {
+		icon_pixbufs.push_back(gdk_pixbuf_new_from_inline(-1, pixbufs[i], FALSE, NULL));	
+	}
 
 	GtkCellRenderer* pixbuf_renderer = gtk_cell_renderer_pixbuf_new();
 	GtkTreeViewColumn* i_column = gtk_tree_view_column_new_with_attributes(
