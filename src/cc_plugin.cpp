@@ -266,4 +266,17 @@ PluginCallback plugin_callbacks[] = {
     //{"document_open", (GCallback)&on_document_open, FALSE, NULL},
     {NULL, NULL, FALSE, NULL}};
 
+
+#if GEANY_API_VERSION >= 255
+extern void plugin_set_info(PluginInfo* info);
+void geany_load_module(GeanyPlugin* plugin) {
+	plugin_set_info(plugin->info);
+	plugin->funcs->info = plugin_init;
+	plugin->funcs->cleanup = plugin_cleanup;
+	plugin->funcs->configure = plugin_configure;
+	plugin->funcs->callbacks = plugin_callbacks;
+	
+	GEANY_PLUGIN_REGISTER(plugin, 225);
+}
+#endif
 }
