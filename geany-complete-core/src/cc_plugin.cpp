@@ -259,11 +259,26 @@ GtkWidget* plugin_configure(GtkDialog* dialog)
 
 GeanyPlugin* geany_plugin;
 GeanyData* geany_data;
-
+#if GEANY_API_VERSION < 224
+GeanyFunction* geany_functions;
+#endif
 PluginCallback plugin_callbacks[] = {
     {"editor_notify", (GCallback) & on_editor_notify, FALSE, NULL},
     {"document_activate", (GCallback) & on_document_activate, FALSE, NULL},
     //{"document_open", (GCallback)&on_document_open, FALSE, NULL},
     {NULL, NULL, FALSE, NULL}};
 
+
+#if GEANY_API_VERSION >= 255
+extern void plugin_set_info(PluginInfo* info);
+void geany_load_module(GeanyPlugin* plugin) {
+	plugin_set_info(plugin->info);
+	plugin->funcs->info = plugin_init;
+	plugin->funcs->cleanup = plugin_cleanup;
+	plugin->funcs->configure = plugin_configure;
+	plugin->funcs->callbacks = plugin_callbacks;
+	
+	GEANY_PLUGIN_REGISTER(plugin, 225);
+}
+#endif
 }

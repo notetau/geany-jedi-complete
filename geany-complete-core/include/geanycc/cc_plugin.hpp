@@ -25,6 +25,9 @@
 extern "C" {
 extern GeanyPlugin *geany_plugin;
 extern GeanyData *geany_data;
+#if GEANY_API_VERSION < 224
+extern GeanyFunction *geany_functions;
+#endif
 }
 
 namespace geanycc
