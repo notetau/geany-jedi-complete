@@ -260,7 +260,7 @@ GtkWidget* plugin_configure(GtkDialog* dialog)
 GeanyPlugin* geany_plugin;
 GeanyData* geany_data;
 #if GEANY_API_VERSION < 224
-GeanyFunction* geany_functions;
+GeanyFunctions* geany_functions;
 #endif
 PluginCallback plugin_callbacks[] = {
     {"editor_notify", (GCallback) & on_editor_notify, FALSE, NULL},
