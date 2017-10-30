@@ -44,7 +44,7 @@ also you can reinstall jedi server script from settings
 Remove the installed library. e.g.
 
 ````
-rm /usr/lib/i386-linux-gnu/geany/geanyjedicomplete.so
+rm /usr/lib/x86_64-linux-gnu/geany/geanyjedicomplete.so
 ````
 
 Remove the config files. e.g.
