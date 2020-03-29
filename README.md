@@ -1,9 +1,9 @@
 geany-jedi-complete
 ====================
 
-Geany plugin to provide code completion (Python) using jedi autocompletion library
+A Geany plugin to provide code completion (Python) using the jedi autocompletion library
 
-## requirements
+## Requirements
 
 1.
 
@@ -11,7 +11,7 @@ Geany plugin to provide code completion (Python) using jedi autocompletion libra
 
 `libgtk2.0-dev`
 
-install from repos on Ubuntu:
+Install from repositories on Ubuntu:
 
 `sudo apt-get install libgtk2.0-dev libcurl4-openssl-dev`
 
@@ -19,11 +19,11 @@ install from repos on Ubuntu:
 
 `jedi`
 
-install using pip:
+Install using pip:
 
 `sudo pip install jedi`
 
-## install plugin
+## Install plugin
 
 `sudo make install`
 
@@ -31,23 +31,23 @@ or
 
 `sudo make install PREFIX=<INSTALL DIR>`
 
-then you can enable plugin in Plugin manager from editor
+Then you can enable the plugin in the Plugin manager from the editor.
 
-also you can reinstall jedi server script from settings
+Also, you can reinstall the jedi server script from settings.
 
-## screenshot
+## Screenshot
 
-![screenshot](https://github.com/notetau/geany-complete-core/wiki/image/geany-cc_sc2.png)
+![Screenshot](https://github.com/notetau/geany-complete-core/wiki/image/geany-cc_sc2.png)
 
-## uninstall plugin
+## Uninstall plugin
 
-Remove the installed library. e.g.
+Remove the installed library. E.g.,
 
 ````
 rm /usr/lib/i386-linux-gnu/geany/geanyjedicomplete.so
 ````
 
-Remove the config files. e.g.
+Remove the configuration files. e.g.
 
 ````
 rm -rf $HOME/.config/geany/plugins/jedi-complete
